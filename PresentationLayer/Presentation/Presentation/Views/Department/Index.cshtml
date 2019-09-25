@@ -1,0 +1,84 @@
+﻿@model BusinessModels.ViewModel.CustomerBillingModel
+@using BusinessModels.CGC
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui-1.10.0.js"></script>
+<script src="~/Scripts/i18n/grid.locale-en.js"></script>
+<script src="~/Scripts/jquery.jqGrid.min.js"></script>
+
+@*<table class="table table-bordered tab-content">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+    </thead>
+
+    @foreach (MasterTable item in Model._GetMasterData)
+    {
+        <tbody>
+            <tr>
+                <td>@item.Master_Name</td>
+                <td>@item.Master_Email</td>
+                <td>@item.PassWord</td>
+
+            </tr>
+        </tbody>
+    }
+</table>*@
+<table id="Demogrid"></table>
+<div id="pager"></div> 
+<script>
+    $(function () {
+        $("#Demogrid").jqGrid
+          ({
+              url: "http://localhost:63732/Department/GetCustomers",
+              datatype: 'json',
+              mtype: 'Get',
+              //table header name  
+              colNames: ['Id','Name', 'EmailId', 'PassWord'],
+              //colModel takes the data from controller and binds to grid  
+              colModel: [
+              { name: "Id" },
+              { name: "Master_Name" },
+              { name: "Master_Email" },
+              { name: "PassWord" }
+              ],
+              height: '100%',
+              rowNum: 10,
+              viewrecords: true,
+              caption: 'JQgrid DEMO',
+              emptyrecords: 'No records',
+              pager: jQuery('#pager'),
+              rowList: [10, 20, 30, 40],
+              jsonReader:
+              {
+                  root: "rows",
+                  page: "page",
+                  total: "total",
+                  records: "records",
+                  repeatitems: false,
+                  Id: "0"
+              },
+              autowidth: true,
+          }).navGrid('#pager',
+            {
+                edit: true,
+                add: true,
+                del: true,
+                search: true,
+                refresh: true,
+                closeAfterSearch: true
+            });
+    });
+</script>
+
