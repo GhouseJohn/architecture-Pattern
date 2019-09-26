@@ -31,6 +31,15 @@ namespace Presentation.Controllers
 
         }
 
+
+
+        public ActionResult GetDataTable()
+        {
+            var x = _objEmployee.GetMasterData();
+            _objbilling._GetMasterData = x;
+            return View(_objbilling);
+        }
+
         public JsonResult hhh()
         {
             return Json("");
