@@ -15,28 +15,28 @@
 <script src="~/Scripts/jquery.jqGrid.min.js"></script>
 
 @*<table class="table table-bordered tab-content">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Password</th>
-        </tr>
-    </thead>
-
-    @foreach (MasterTable item in Model._GetMasterData)
-    {
-        <tbody>
+        <thead>
             <tr>
-                <td>@item.Master_Name</td>
-                <td>@item.Master_Email</td>
-                <td>@item.PassWord</td>
-
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
             </tr>
-        </tbody>
-    }
-</table>*@
+        </thead>
+
+        @foreach (MasterTable item in Model._GetMasterData)
+        {
+            <tbody>
+                <tr>
+                    <td>@item.Master_Name</td>
+                    <td>@item.Master_Email</td>
+                    <td>@item.PassWord</td>
+
+                </tr>
+            </tbody>
+        }
+    </table>*@
 <table id="Demogrid"></table>
-<div id="pager"></div> 
+<div id="pager"></div>
 <script>
     $(function () {
         $("#Demogrid").jqGrid
@@ -44,14 +44,22 @@
               url: "http://localhost:63732/Department/GetCustomers",
               datatype: 'json',
               mtype: 'Get',
-              //table header name  
-              colNames: ['Id','Name', 'EmailId', 'PassWord'],
-              //colModel takes the data from controller and binds to grid  
+              //table header name
+              colNames: ['Id', 'Name', 'EmailId', 'PassWord'],
+              //colModel takes the data from controller and binds to grid
               colModel: [
-              { name: "Id" },
-              { name: "Master_Name" },
-              { name: "Master_Email" },
-              { name: "PassWord" }
+
+                   {
+                       name: 'Id',
+                       editable: true,
+                       key: true,
+                       hidden: true,
+                       search: false
+                   },
+              //{ name: "Id"},
+              { name: "Master_Name", editable: true, editrules: { required: true }, search: true },
+              { name: "Master_Email", editable: true, editrules: { required: true }, search: true },
+              { name: "PassWord", editable: true, editrules: { required: true }, search: true }
               ],
               height: '100%',
               rowNum: 10,
@@ -78,7 +86,41 @@
                 search: true,
                 refresh: true,
                 closeAfterSearch: true
-            });
+            },
+            {
+                // edit option
+                zIndex: 100,
+                url: '/Demo/EditCustomer',
+                closeOnEscape: true,
+                closeAfterEdit: true,
+                recreateForm: true,
+                afterComplete: function (response) {
+                    if (response.responseText) {
+                        alert(response.responseText);
+                    }
+                }
+            },
+                {
+                    // add option
+                    zIndex: 100,
+                    url: "http://localhost:63732/Department/CreateCustomer",
+                    closeOnEscape: true,
+                    closeAfterAdd: true,
+                    afterComplete: function (response) {
+                        if (response.responseJSON) {
+                            if (response.responseJSON == "Saved Successfully") {
+                                alert("Saved Successfully");
+                            }
+                            else {
+                                var message = "";
+                                for (var i = 0; i < response.responseJSON.length; i++) {
+                                    message += response.responseJSON[i];
+                                    message += "\n";
+                                }
+                            }
+
+                        }
+                    }
+                });
     });
 </script>
-

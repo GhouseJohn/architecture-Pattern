@@ -31,7 +31,11 @@ namespace Presentation.Controllers
 
         }
 
-
+        public JsonResult hhh()
+        {
+            return Json("");
+        }
+         
         public JsonResult GetCustomers(string sord,string word, int page, int rows, string searchString)
         {
             // Setting Paging 
@@ -63,12 +67,17 @@ namespace Presentation.Controllers
             return Json(jsonobj, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-
         public ActionResult GetMasterData()
         {
            
             var x = _objEmployee.GetMasterData();
             return Json(x, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult CreateCustomer([Bind(Exclude = "CustomerID")] MasterTable customers)
+        {
+            return Json("");
         }
     }
 }
