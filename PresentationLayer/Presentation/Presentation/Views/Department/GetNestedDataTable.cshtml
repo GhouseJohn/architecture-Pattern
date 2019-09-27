@@ -4,13 +4,61 @@
 @{
     ViewBag.Title = "GetNestedDataTable";
 }
-
+<style>
+            td.details-control {
+            text-align:center;
+            color:forestgreen;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    text-align:center; 
+    color:red;
+}
+</style>
 
 <link href="https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js"></script>
 
 
+@*<link href="https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css" rel="stylesheet" />
+<link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.1/js/dataTables.select.min.js" type="text/javascript"></script>*@
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        alert();
+        $('#myTable').on('click', 'td.details-control', function () {
+            debugger;
+            alert();
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+        })
+            var table = $("#myTable").DataTable({
+                'responsive': true,
+            });
+
+            table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
+
+            // Handle click on "Expand All" button
+            $('#btn-show-all-children').on('click', function () {
+                // Expand row details
+                table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
+            });
+
+            // Handle click on "Collapse All" button
+            $('#btn-hide-all-children').on('click', function () {
+                // Collapse row details
+                table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
+            });
+
+           
+        })
+</script>
 
 <table id="myTable" class="display" cellspacing="0">
     <thead>
@@ -20,6 +68,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Password</th>
+            <th>MyImage</th>
             <th class="none"></th>
         </tr>
     </thead>
@@ -33,6 +82,10 @@
                 <td>@item.Master_Name</td>
                 <td>@item.Master_Email</td>
                 <td>@item.PassWord</td>
+                <td>
+                
+                <img  height="75%" width="75%"  src="https://i5.walmartimages.ca/images/Large/094/514/6000200094514.jpg" />
+                </td>
                <td>
                    <table class="table table-bordered display" cellspacing="0"> 
                        <thead>
@@ -65,24 +118,3 @@
 
 
 
-<script type="text/javascript">
-        $(document).ready(function () {
-            var table = $("#myTable").DataTable({
-                'responsive': true
-
-            });
-            table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
-
-            // Handle click on "Expand All" button
-            $('#btn-show-all-children').on('click', function () {
-                // Expand row details
-                table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
-            });
-
-            // Handle click on "Collapse All" button
-            $('#btn-hide-all-children').on('click', function () {
-                // Collapse row details
-                table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
-            });
-        })
-</script>
