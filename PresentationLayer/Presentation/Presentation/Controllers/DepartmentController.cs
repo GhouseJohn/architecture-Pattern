@@ -40,6 +40,18 @@ namespace Presentation.Controllers
             return View(_objbilling);
         }
 
+
+
+        public ActionResult GetNestedDataTable()
+        {
+            var x = _objEmployee.GetMasterData();
+            var _CountryData = _objEmployee.GetCountry();
+            _objbilling._GetMasterData = x;
+            _objbilling._GetCountryData = _CountryData;
+            return View(_objbilling);
+        }
+
+
         public JsonResult hhh()
         {
             return Json("");

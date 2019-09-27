@@ -11,7 +11,9 @@ namespace BusinessModels.ViewModel
     {
         public MasterTable _masTable { get; set; }
         public IEnumerable<MasterTable> _GetMasterData { get; set; }
+        public IEnumerable<Country> _GetCountryData { get; set; }
 
 
-}
+
+    }
 }

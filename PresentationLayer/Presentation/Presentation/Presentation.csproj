@@ -382,6 +382,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
     <Content Include="Views\Department\GetDataTable.cshtml" />
+    <Content Include="Views\Department\GetNestedDataTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
